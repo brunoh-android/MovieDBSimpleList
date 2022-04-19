@@ -3,23 +3,29 @@ package br.bruno.moviedbsimplelist
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.bruno.moviedbsimplelist.databinding.ActivityMainBinding
 import br.bruno.moviedbsimplelist.models.Movie
 import br.bruno.moviedbsimplelist.models.MovieResponse
 import br.bruno.moviedbsimplelist.services.MovieApiInterface
 import br.bruno.moviedbsimplelist.services.MovieApiService
-import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        rv_movie_list.layoutManager = LinearLayoutManager(this)
-        rv_movie_list.setHasFixedSize(true)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.rvMovieList.layoutManager = LinearLayoutManager(this)
+        binding.rvMovieList.setHasFixedSize(true)
         getMovieData { movies: List<Movie> ->
-            rv_movie_list.adapter = MovieAdapter(movies)
+            binding.rvMovieList.adapter = MovieAdapter(movies)
         }
     }
 

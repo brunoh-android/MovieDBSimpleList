@@ -1,12 +1,11 @@
 package br.bruno.moviedbsimplelist
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import br.bruno.moviedbsimplelist.databinding.MovieItenBinding
 import br.bruno.moviedbsimplelist.models.Movie
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.movie_iten.view.*
 
 
 class MovieAdapter(
@@ -14,22 +13,25 @@ class MovieAdapter(
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
 
-    class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class MovieViewHolder(private var binding: MovieItenBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
         private val IMAGE_BASE = "https://image.tmdb.org/t/p/w500/"
 
         fun bindMovie(movie: Movie) {
 
 
-            itemView.movie_title.text = movie.title
-            itemView.movie_release_date.text = movie.realease
-            Glide.with(itemView).load(IMAGE_BASE + movie.poster).into(itemView.movie_poster)
+            binding.movieTitle.text = movie.title
+            binding.movieReleaseDate.text = movie.realease
+            Glide.with(itemView).load(IMAGE_BASE + movie.poster).into(binding.moviePoster)
 
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.movie_iten, parent, false)
+            binding = MovieItenBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//
         )
     }
 
